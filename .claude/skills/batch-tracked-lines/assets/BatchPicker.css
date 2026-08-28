@@ -1,0 +1,317 @@
+/* ═══════════════════════════════════════════════
+   BATCHPICKER.CSS — the batch selection popup
+   Borrows Modal.css's tokens so it reads as part of the same dialog; the few
+   values below are the ones Modal has no token for.
+   z-index sits above --modal-overlay (9000): the popup opens on top of a modal.
+═══════════════════════════════════════════════ */
+
+.bp-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--modal-overlay-bg, var(--scrim));
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: bp-fade 0.15s ease;
+}
+@keyframes bp-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.bp-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(560px, 100%);
+  max-height: min(620px, 100%);
+  background: var(--modal-bg, #fff);
+  border: 1px solid var(--modal-border, var(--line));
+  border-radius: var(--modal-radius, 10px);
+  box-shadow: var(--modal-shadow, 0 24px 64px -12px rgb(var(--shade-rgb) / 0.7));
+  font-family: var(--modal-font, 'IBM Plex Sans', system-ui, sans-serif);
+  color: var(--modal-body-color, #1f2937);
+  overflow: hidden;
+  animation: bp-pop 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes bp-pop {
+  from { opacity: 0; transform: scale(0.97) translateY(6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ─── header ─── */
+.bp-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--modal-header-border, var(--line));
+}
+.bp-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--modal-title-color, #111318);
+}
+.bp-subtitle {
+  margin: 3px 0 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--modal-subtitle-color, #6b7280);
+  overflow-wrap: anywhere;
+}
+.bp-close {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--modal-input-border, #dfe3e8);
+  border-radius: 6px;
+  background: var(--modal-bg, #fff);
+  color: var(--modal-hint-color, var(--text3));
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.bp-close:hover {
+  color: var(--modal-error-color, var(--red2));
+  border-color: var(--modal-error-border, var(--red));
+  background: var(--modal-error-bg, rgb(var(--red-rgb) / 0.10));
+}
+
+/* ─── toolbar ─── */
+.bp-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--modal-divider, var(--line));
+}
+.bp-search {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 7px 10px;
+  border: 1px solid var(--modal-input-border, #dfe3e8);
+  border-radius: 6px;
+  background: var(--modal-input-bg, #fff);
+  color: var(--modal-input-color, #111318);
+  font-size: 12.5px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+.bp-search:focus {
+  border-color: var(--modal-input-focus, var(--gold));
+  box-shadow: var(--modal-input-focus-shadow, 0 0 0 3px rgb(var(--gold-rgb) / 0.16));
+}
+
+/* ─── list ─── */
+.bp-body {
+  flex: 1;
+  overflow: auto;
+  padding: 4px 16px 12px;
+}
+.bp-msg {
+  margin: 16px 0;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--modal-hint-color, var(--text3));
+}
+.bp-msg--error { color: var(--modal-error-color, #dc2626); }
+
+.bp-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.bp-tbl thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--modal-well, var(--ink-800));
+  color: var(--modal-hint-color, var(--text3));
+  font-family: var(--modal-font-mono, ui-monospace, Menlo, monospace);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--modal-border, var(--line));
+  white-space: nowrap;
+}
+.bp-tbl tbody td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--modal-row-line, #1c2434);
+  vertical-align: middle;
+}
+.bp-tbl tbody tr:last-child td { border-bottom: none; }
+.bp-tbl tbody tr:hover td { background: var(--modal-row-hover, var(--ink-600)); }
+.bp-tbl .bp-tbl-empty { text-align: center; color: var(--modal-hint-color, var(--text3)); padding: 16px; }
+
+.bp-row--picked td { background: rgb(var(--gold-rgb) / 0.09); }
+.bp-row--picked:hover td { background: rgb(var(--gold-rgb) / 0.15); }
+.bp-row--over td { background: var(--modal-error-bg, #fef2f2); }
+
+.bp-batchnum { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
+.bp-num { text-align: right; font-variant-numeric: tabular-nums; color: var(--modal-hint-color, var(--text3)); }
+.bp-check { width: 15px; height: 15px; accent-color: var(--modal-input-focus, var(--gold)); cursor: pointer; }
+
+.bp-flag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--modal-error-bg, rgb(var(--red-rgb) / 0.10));
+  border: 1px solid var(--modal-error-border, var(--red));
+  color: var(--modal-error-color, var(--red2));
+  font-family: var(--modal-font, sans-serif);
+  font-size: 9.5px;
+  letter-spacing: 0.2px;
+  vertical-align: middle;
+}
+
+.bp-qty {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border: 1px solid var(--modal-input-border, #dfe3e8);
+  border-radius: 6px;
+  background: var(--modal-input-bg, #fff);
+  color: var(--modal-input-color, #111318);
+  font-size: 12.5px;
+  font-family: inherit;
+  text-align: right;
+  outline: none;
+}
+.bp-qty:focus {
+  border-color: var(--modal-input-focus, var(--gold));
+  box-shadow: var(--modal-input-focus-shadow, 0 0 0 3px rgb(var(--gold-rgb) / 0.16));
+}
+.bp-qty:disabled { background: var(--modal-input-disabled, var(--ink-850)); color: var(--modal-hint-color, var(--text3)); }
+
+/* ─── footer ─── */
+.bp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--modal-footer-border, var(--line));
+  background: var(--modal-footer-bg, #fff);
+}
+.bp-totals {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--modal-hint-color, var(--text3));
+}
+.bp-totals strong { color: var(--modal-body-color, #1f2937); }
+.bp-warn { color: var(--modal-error-color, #dc2626); font-size: 11.5px; }
+.bp-note { color: var(--modal-badge-edit-color, var(--amber2)); font-size: 11.5px; }
+
+.bp-footer-actions { display: flex; gap: 8px; flex: none; }
+
+.bp-btn {
+  padding: 7px 14px;
+  border-radius: var(--modal-btn-radius, 8px);
+  border: 1px solid transparent;
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.12s;
+  white-space: nowrap;
+}
+.bp-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.bp-btn--primary {
+  background: var(--modal-btn-primary-bg, var(--gold));
+  color: var(--modal-btn-primary-color, var(--on-gold));
+}
+.bp-btn--primary:hover:not(:disabled) { filter: brightness(0.94); }
+.bp-btn--secondary,
+.bp-btn--ghost {
+  background: var(--modal-bg, var(--ink-700));
+  border-color: var(--modal-input-border, var(--line-2));
+  color: var(--modal-btn-secondary-color, var(--text2));
+}
+.bp-btn--secondary:hover:not(:disabled),
+.bp-btn--ghost:hover:not(:disabled) {
+  border-color: var(--modal-input-hover, var(--line-3));
+  background: var(--modal-row-hover, var(--ink-600));
+}
+.bp-btn--ghost { font-weight: 500; }
+
+/* ─── the trigger that lives in a line-item row ─── */
+.bp-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 8px;
+  background: var(--modal-bg, #fff);
+  border: 1px solid var(--modal-input-border, #dfe3e8);
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--modal-btn-secondary-color, var(--text2));
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.bp-trigger:hover:not(:disabled) {
+  border-color: var(--modal-input-focus, var(--gold));
+  background: rgb(var(--gold-rgb) / 0.08);
+}
+.bp-trigger:disabled { opacity: 0.5; cursor: not-allowed; }
+.bp-trigger--set {
+  border-color: rgb(var(--green-rgb) / 0.35);
+  background: rgb(var(--green-rgb) / 0.10);
+  color: var(--green2);
+}
+.bp-trigger-count {
+  font-size: 10px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── responsive ───
+   Picking batches is a counting task done standing up, so on a phone the popup
+   takes the whole screen: more rows visible, and the quantity fields sit clear
+   of the keyboard rather than behind it. */
+@media (max-width: 640px) {
+  .bp-overlay { padding: 0; align-items: stretch; }
+  .bp-panel {
+    width: 100%;
+    max-height: 100%;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+  }
+  .bp-header { padding: calc(14px + env(safe-area-inset-top, 0px)) 14px 14px; }
+  .bp-toolbar { padding: 10px 14px; }
+  .bp-body { padding: 4px 14px 12px; }
+  .bp-search,
+  .bp-qty { font-size: 16px; }
+  .bp-tbl tbody td { padding: 9px 8px; }
+  .bp-close { width: 36px; height: 36px; }
+
+  .bp-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+  .bp-footer-actions { justify-content: stretch; }
+  .bp-footer-actions .bp-btn { flex: 1; min-height: 44px; }
+}
+
+@media (pointer: coarse) {
+  .bp-btn { min-height: 40px; }
+  .bp-check { width: 20px; height: 20px; }
+  .bp-trigger { min-height: 34px; }
+}

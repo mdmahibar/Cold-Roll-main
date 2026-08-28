@@ -1,0 +1,309 @@
+/* ============================================================
+   AuthMatrix — Modern Two-Panel Design (ROSE MenuAssignment)
+   Semantic CSS classes using @apply, prefixed `am-`.
+   ============================================================ */
+
+/* ── Page Layout ── */
+.am-container {
+    @apply mx-auto flex max-w-[1440px] flex-col gap-4 pb-10;
+}
+
+.am-header {
+    @apply flex items-start justify-between;
+}
+
+.am-header-left {
+    @apply flex flex-col gap-0.5;
+}
+
+.am-breadcrumb {
+    @apply flex items-center gap-1.5 text-[11px] text-gray-400;
+}
+
+.am-breadcrumb-link {
+    @apply cursor-pointer hover:text-sap-primary transition-colors;
+}
+
+.am-breadcrumb-current {
+    @apply text-gray-600 font-medium;
+}
+
+.am-title-row {
+    @apply flex items-center gap-2.5 mt-1;
+}
+
+.am-title-icon {
+    @apply h-5 w-5 text-[#F26419];
+}
+
+.am-title {
+    @apply text-[17px] font-bold text-gray-800 tracking-tight;
+}
+
+.am-subtitle {
+    @apply text-[11px] text-gray-500 mt-0.5 font-medium;
+}
+
+.am-header-right {
+    @apply mt-3 flex items-center gap-2;
+}
+
+/* ── Controls ── */
+.am-view-by-wrapper {
+    @apply flex items-center gap-2 mr-2;
+}
+
+.am-view-by-label {
+    @apply text-[11px] font-medium text-gray-500;
+}
+
+.am-view-select {
+    @apply text-[11px] border border-gray-300 rounded px-2 py-[5px] bg-white text-gray-700 outline-none focus:border-sap-primary;
+}
+
+.am-btn-reset {
+    @apply inline-flex items-center gap-1.5 rounded border border-gray-300 bg-white px-3 py-[6px] text-[11px] font-bold text-gray-700 hover:bg-gray-50 shadow-sm transition-colors;
+}
+
+.am-btn-save {
+    @apply inline-flex items-center gap-1.5 rounded bg-sap-primary px-4 py-[6px] text-[11px] font-bold text-white hover:bg-blue-700 shadow-sm transition-colors;
+}
+
+.am-btn-save:disabled {
+    @apply opacity-70 cursor-not-allowed;
+}
+
+.am-btn-icon {
+    @apply h-3.5 w-3.5;
+}
+
+/* ── Two-Panel Layout ── */
+.am-panels {
+    @apply grid gap-5;
+    grid-template-columns: 280px 1fr;
+    min-height: 500px;
+}
+
+/* ── Left Panel — Role List ── */
+.am-panel-left {
+    @apply bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden self-start;
+}
+
+.am-panel-title {
+    @apply flex items-center gap-2.5 px-4 py-3 border-b border-[#1C3347];
+    background: #1C3347;
+}
+
+.am-panel-title h3 {
+    @apply text-[13px] font-extrabold text-white tracking-tight;
+}
+
+.am-panel-title-icon {
+    @apply h-4 w-4 text-white;
+}
+
+.am-role-list {
+    @apply flex flex-col p-2 gap-0.5;
+}
+
+.am-role-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-md cursor-pointer text-[12px] font-medium text-gray-600;
+    transition: all 0.15s ease;
+}
+
+.am-role-item:hover {
+    @apply bg-blue-50;
+}
+
+.am-role-item--active {
+    @apply bg-blue-50 text-sap-primary font-bold;
+    box-shadow: inset 3px 0 0 0 var(--tw-colors-sap-primary, #0070f2);
+}
+
+.am-role-radio {
+    @apply h-[14px] w-[14px] cursor-pointer;
+    accent-color: #0070f2;
+}
+
+.am-role-name {
+    @apply font-semibold flex-1;
+}
+
+.am-role-sub {
+    @apply text-[10px] text-gray-400 ml-auto uppercase tracking-wider;
+}
+
+/* ── Right Panel — Permission Tree ── */
+.am-panel-right {
+    @apply bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden flex flex-col;
+}
+
+.am-panel-right>.am-panel-title {
+    @apply justify-between;
+}
+
+.am-legend {
+    @apply flex items-center gap-4 ml-auto;
+}
+
+.am-legend-item {
+    @apply flex items-center gap-1.5 text-[10px] font-bold text-gray-200;
+}
+
+/* ── Search ── */
+.am-search-wrapper {
+    @apply relative mx-4 mt-3 mb-1;
+}
+
+.am-search-icon {
+    @apply absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400;
+}
+
+.am-search-input {
+    @apply w-full h-8 pl-8 pr-3 text-[11px] rounded-md border border-gray-200 focus:border-sap-primary focus:ring-1 focus:ring-sap-primary outline-none;
+    background: #f8fafc;
+    transition: all 0.2s ease;
+}
+
+.am-search-input:focus {
+    @apply bg-white;
+}
+
+/* ── Matrix Table Container ── */
+.am-matrix-wrapper {
+  @apply flex-1 overflow-y-auto w-full bg-white;
+}
+
+.am-matrix-table {
+  @apply w-full text-left border-collapse;
+}
+
+/* ── Matrix Header ── */
+.am-matrix-thead {
+  @apply sticky top-0 bg-[#f8fafc] z-10 border-b-2 border-gray-200 shadow-sm;
+}
+
+.am-matrix-th {
+  @apply py-3 px-4 text-[10px] font-extrabold text-gray-500 uppercase tracking-wider align-bottom;
+}
+
+.am-matrix-th--action {
+  @apply w-[45%];
+}
+
+.am-matrix-th--perm {
+  @apply text-center w-[12%];
+}
+
+/* ── Header Checkbox Column Label ── */
+.am-th-col-content {
+  @apply flex flex-col items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity;
+}
+
+.am-th-col-label {
+  @apply mt-1 tracking-widest text-[9.5px];
+}
+
+/* ── Matrix Body ── */
+.am-matrix-tbody {
+  @apply divide-y divide-gray-100;
+}
+
+/* ── Group Row ── */
+.am-matrix-group-row {
+  @apply bg-[#f1f5f9] border-t border-b border-gray-200;
+}
+
+.am-matrix-group-td {
+  @apply py-2 px-4;
+}
+
+.am-matrix-group-label {
+  @apply text-[11px] font-extrabold text-sap-primary uppercase tracking-wider;
+}
+
+/* ── Item Row ── */
+.am-matrix-item-row {
+  @apply hover:bg-blue-50/30 transition-colors;
+}
+
+.am-matrix-item-td {
+  @apply py-[9px] px-4 text-[12px] font-medium text-gray-700 align-middle;
+}
+
+.am-matrix-item-td-perm {
+  @apply py-[9px] px-4 text-center align-middle;
+}
+
+/* ── Checkboxes ── */
+.am-checkbox {
+  @apply w-4 h-4 rounded border-gray-300 cursor-pointer transition-all duration-200 shadow-sm focus:ring-0 focus:ring-offset-0 m-0 p-0 align-middle;
+}
+
+/* Base states */
+.am-checkbox:not(:checked) {
+  @apply bg-white border border-gray-300;
+}
+
+/* View Checkbox (Blue) */
+.am-checkbox--view {
+  accent-color: #3b82f6; /* Tailwind blue-500 */
+}
+.am-checkbox--view:checked {
+  @apply bg-blue-500 border-blue-500;
+}
+.am-th-col-label--view {
+  @apply text-blue-600;
+}
+
+/* Add Checkbox (Green) */
+.am-checkbox--add {
+  accent-color: #22c55e; /* Tailwind green-500 */
+}
+.am-checkbox--add:checked {
+  @apply bg-green-500 border-green-500;
+}
+.am-th-col-label--add {
+  @apply text-green-600;
+}
+
+/* Edit Checkbox (Orange/Amber) */
+.am-checkbox--edit {
+  accent-color: #d97706; /* Tailwind amber-600 */
+}
+.am-checkbox--edit:checked {
+  @apply bg-amber-600 border-amber-600;
+}
+.am-th-col-label--edit {
+  @apply text-amber-700;
+}
+
+/* Delete Checkbox (Red) */
+.am-checkbox--delete {
+  accent-color: #ef4444; /* Tailwind red-500 */
+}
+.am-checkbox--delete:checked {
+  @apply bg-red-500 border-red-500;
+}
+.am-th-col-label--delete {
+  @apply text-red-600;
+}
+
+/* Empty State */
+.am-matrix-empty {
+  @apply text-center py-12 text-[12px] text-gray-400 font-medium;
+}
+
+/* Tip styling */
+.am-tip {
+  @apply text-[10px] text-gray-500 mt-2 ml-1 italic;
+}
+
+/* ── Bottom Action Bar ── */
+.am-bottom-bar {
+    @apply flex items-center justify-end gap-2 px-4 py-3 border-t border-gray-200;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+/* spinner used by the loading states */
+.am-spin { animation: am-spin 0.9s linear infinite; }
+@keyframes am-spin { to { transform: rotate(360deg); } }

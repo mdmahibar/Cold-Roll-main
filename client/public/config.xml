@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AppConfig>
+  <!-- API root. No trailing slash. Every service path is appended to this. -->
+  <REACT_APP_API_ROOT>http://dts.connectcloud365.com:12902/api</REACT_APP_API_ROOT>
+  <REACT_APP_DB></REACT_APP_DB>
+  <REACT_APP_NAME>SAP B1 Extension</REACT_APP_NAME>
+
+  <!-- Application Access Key issued by the API team. Sent as the AccessKey
+       header on /api/LoginData/UserLogin (before a session exists). -->
+  <REACT_APP_ACCESS_KEY>564B323D61345748363A5C303247325A31315C4E30633F323662314A5531614D344F42323D3930333632</REACT_APP_ACCESS_KEY>
+
+  <!-- Y = this deployment talks to SAP B1, N = standalone. Sent as the
+       SAPApplicable header during login; afterwards the value returned by
+       the login response is used. -->
+  <REACT_APP_SAP_APPLICABLE>Y</REACT_APP_SAP_APPLICABLE>
+
+  <!-- Y = enforce the permission matrix (production default).
+       N = fail-open, every authenticated user can open every screen.
+       Use N only while the Menu master is still being seeded. -->
+  <REACT_APP_ENFORCE_PERMISSIONS>Y</REACT_APP_ENFORCE_PERMISSIONS>
+</AppConfig>

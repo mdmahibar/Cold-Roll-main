@@ -1,0 +1,85 @@
+/* ═══════════════════════════════════════════════
+   Loader.css — minimal premium spinner
+   Brand colour matches app theme (sap-primary #0070f2)
+═══════════════════════════════════════════════ */
+
+.ldr {
+  --ldr-color: #0070f2;
+  --ldr-track: rgba(0, 112, 242, 0.15);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Smooth conic-gradient ring — thin, clean, premium */
+.ldr-spinner {
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+  background: conic-gradient(from 90deg, transparent 0%, var(--ldr-color) 100%);
+  /* carve out the centre so only a ring remains */
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--ldr-thick)), #000 0);
+          mask: radial-gradient(farthest-side, transparent calc(100% - var(--ldr-thick)), #000 0);
+  animation: ldr-spin 0.75s linear infinite;
+}
+
+/* faint full-circle track sits behind the spinning arc */
+.ldr-spinner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: var(--ldr-thick) solid var(--ldr-track);
+}
+
+.ldr-spinner--sm { width: 20px; height: 20px; --ldr-thick: 2.5px; }
+.ldr-spinner--md { width: 34px; height: 34px; --ldr-thick: 3.5px; }
+.ldr-spinner--lg { width: 52px; height: 52px; --ldr-thick: 5px; }
+
+.ldr-label {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: #475569; /* slate-600 */
+}
+
+/* screen-reader only */
+.ldr-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ── Overlay (covers nearest positioned parent) ── */
+.ldr-backdrop {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 40;
+  animation: ldr-fade 0.15s ease;
+}
+
+/* ── Fullscreen (sits above the modal, z-index 9000) ── */
+.ldr-backdrop--fullscreen {
+  position: fixed;
+  z-index: 9500;
+}
+
+@keyframes ldr-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ldr-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

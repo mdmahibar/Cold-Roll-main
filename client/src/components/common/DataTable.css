@@ -1,0 +1,402 @@
+/* ═══════════════════════════════════════════════════════════
+   DataTable — Common Reusable Table Component
+   Prefix: dt-
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Container ── */
+.dt-container {
+  @apply w-full overflow-x-auto relative;
+  border-radius: 6px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.08),
+    inset 0 0 0 1px rgba(255,255,255,0.1);
+  transition: all 0.3s ease;
+}
+
+.dt-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(28, 51, 71, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Table ── */
+.dt-table {
+  @apply w-full;
+  border-collapse: collapse;
+  background: linear-gradient(to bottom right,
+    rgba(255,255,255,0.95) 0%,
+    rgba(245,247,250,0.98) 100%);
+  font-size: 12px;
+  position: relative;
+}
+
+/* ── Header ── */
+.dt-thead {
+  background: #1C3347;
+  border-bottom: none;
+  position: relative;
+}
+
+.dt-thead::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    rgba(88, 147, 228, 0.5) 0%,
+    rgba(88, 147, 228, 0.2) 50%,
+    transparent 100%);
+}
+
+.dt-th {
+  @apply font-semibold text-left;
+  color: #ffffff !important;
+  padding: 10px 14px;
+  font-size: 11px;
+  position: relative;
+  background: transparent !important;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.dt-th:last-child {
+  border-right: none;
+}
+
+.dt-th:hover {
+  background: linear-gradient(to bottom,
+    rgba(88, 147, 228, 0.15) 0%,
+    transparent 100%) !important;
+}
+
+.dt-th::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #5893e4 0%, #7eb3f5 100%);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
+}
+
+.dt-th:hover::after {
+  width: 100%;
+}
+
+/* ── Body ── */
+.dt-tbody {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Row ── */
+.dt-row {
+  @apply relative;
+  transition: transform 0.2s ease,
+              box-shadow 0.2s ease,
+              background 0.2s ease;
+  height: 36px;
+}
+
+.dt-row:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.dt-row:hover {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.7) !important;
+  box-shadow: 0 4px 16px rgba(88, 147, 228, 0.08);
+}
+
+.dt-row:hover .dt-td {
+  color: #1e293b;
+}
+
+/* ── Cell ── */
+.dt-td {
+  @apply text-left;
+  padding: 6px 14px;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  color: #334155;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* ── Action Cell ── */
+.dt-action-cell {
+  @apply flex items-center gap-1;
+  padding: 0 4px;
+}
+
+.dt-action-btn {
+  @apply flex items-center justify-center rounded-md transition-all duration-200 cursor-pointer;
+  width: 28px;
+  height: 28px;
+  background: rgba(88, 147, 228, 0.06);
+  border: none;
+  color: #64748b;
+}
+
+.dt-action-btn:hover {
+  background: rgba(88, 147, 228, 0.15);
+  color: #1C3347;
+  transform: scale(1.1);
+}
+
+.dt-action-btn--view {
+  color: #10b981;
+}
+
+.dt-action-btn--view:hover {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+}
+
+.dt-action-btn--edit {
+  color: #5893e4;
+}
+
+.dt-action-btn--edit:hover {
+  background: rgba(88, 147, 228, 0.12);
+  color: #3b76cc;
+}
+
+.dt-action-btn--delete {
+  color: #ef4444;
+}
+
+.dt-action-btn--delete:hover {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+}
+
+.dt-action-btn--approve {
+  color: #10b981;
+}
+
+.dt-action-btn--approve:hover {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+}
+
+.dt-action-btn--reject {
+  color: #ef4444;
+}
+
+.dt-action-btn--pending {
+  color: #f59e0b;
+}
+
+.dt-action-btn--print {
+  color: #6366f1;
+}
+
+.dt-action-btn--print:hover {
+  background: rgba(99, 102, 241, 0.12);
+  color: #4f46e5;
+}
+
+.dt-action-btn--duplicate {
+  color: #8b5cf6;
+}
+
+.dt-action-btn--duplicate:hover {
+  background: rgba(139, 92, 246, 0.12);
+  color: #7c3aed;
+}
+
+/* ── Status Icons ── */
+.dt-status-active {
+  @apply inline-flex items-center justify-center rounded-full;
+  width: 18px;
+  height: 18px;
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+}
+
+.dt-status-blocked {
+  @apply inline-flex items-center justify-center rounded-full;
+  width: 18px;
+  height: 18px;
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+}
+
+.dt-status-pending {
+  @apply inline-flex items-center justify-center rounded-full;
+  width: 18px;
+  height: 18px;
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+}
+
+/* ── Form Inputs (inline editing) ── */
+.dt-input {
+  @apply w-full rounded border border-gray-200 px-2 py-1 text-xs outline-none transition-all;
+  background: rgba(255,255,255,0.8);
+}
+
+.dt-input:focus {
+  @apply border-blue-400;
+  box-shadow: 0 0 0 2px rgba(88, 147, 228, 0.15);
+  background: rgba(255,255,255,0.95);
+}
+
+.dt-select {
+  @apply w-full rounded border border-gray-200 px-2 py-1 text-xs outline-none transition-all bg-white;
+}
+
+.dt-select:focus {
+  @apply border-blue-400;
+  box-shadow: 0 0 0 2px rgba(88, 147, 228, 0.15);
+}
+
+.dt-checkbox {
+  @apply w-4 h-4 rounded cursor-pointer accent-blue-500;
+}
+
+/* ── Empty State ── */
+.dt-empty {
+  @apply text-center py-10 text-gray-400 text-sm;
+}
+
+/* ── Loading ── */
+.dt-loading {
+  @apply text-center py-12 text-gray-400 text-sm;
+}
+
+.dt-loading-shimmer {
+  @apply animate-pulse;
+}
+
+.dt-loading-bar {
+  @apply h-3 rounded bg-gray-200 mb-3;
+}
+
+/* ── Row Highlight (checkbox selected) ── */
+.dt-row--highlighted {
+  background-color: #e0ffe0 !important;
+}
+
+/* ── Footer / Pagination Area ── */
+.dt-footer {
+  @apply flex justify-between items-center flex-wrap px-4 py-3;
+  gap: 16px;
+}
+
+.dt-export-area {
+  @apply flex items-center gap-2;
+}
+
+.dt-export-btn {
+  @apply cursor-pointer transition-opacity;
+  height: 24px;
+  opacity: 0.7;
+}
+
+.dt-export-btn:hover {
+  opacity: 1;
+}
+
+/* ── Pagination (react-paginate) ── */
+.dt-pagination {
+  @apply flex items-center gap-1.5 list-none p-0 m-0;
+}
+
+.dt-pagination li {
+  @apply m-0;
+}
+
+.dt-pagination li a {
+  @apply flex items-center justify-center rounded-md font-medium no-underline transition-all cursor-pointer;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  background: #ffffff;
+  color: #5893e4;
+  font-size: 12px;
+  border: 1px solid #e1e8f5;
+}
+
+.dt-pagination li a:hover {
+  background: #f1f5f9;
+  color: #1C3347;
+}
+
+.dt-pagination li.active a {
+  background: #1C3347;
+  color: #ffffff;
+  border-color: #1C3347;
+  font-weight: 600;
+}
+
+.dt-pagination li.previous a,
+.dt-pagination li.next a {
+  padding: 0 10px;
+  font-weight: 500;
+}
+
+.dt-pagination li.disabled a {
+  @apply bg-gray-50 text-gray-300 cursor-not-allowed pointer-events-none;
+  border-color: #e1e8f5;
+}
+
+.dt-pagination li a:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(88, 147, 228, 0.2);
+}
+
+/* ── Scrollbar ── */
+.dt-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.dt-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg,
+    rgba(88, 147, 228, 0.5) 0%,
+    rgba(88, 147, 228, 0.3) 100%);
+  border-radius: 3px;
+}
+
+.dt-container::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .dt-container {
+    border-radius: 0;
+    backdrop-filter: none;
+    background: rgba(255,255,255,0.95);
+  }
+
+  .dt-th,
+  .dt-td {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .dt-footer {
+    @apply flex-col items-center;
+  }
+
+  .dt-pagination li a {
+    min-width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
+}

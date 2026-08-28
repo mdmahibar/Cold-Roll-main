@@ -1,0 +1,332 @@
+/* ═══════════════════════════════════════════════
+   BATCHPICKER.CSS — the batch details popup
+   Reuses Modal.css tokens so it reads as part of the same dialog.
+   z-index sits above the modal overlay: this popup opens on top of a modal.
+═══════════════════════════════════════════════ */
+
+.bp-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--modal-overlay-bg, rgba(15, 15, 25, 0.45));
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: bp-fade 0.15s ease;
+}
+@keyframes bp-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.bp-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(520px, 100%);
+  max-height: min(600px, 100%);
+  background: var(--modal-bg, #fff);
+  border: 1px solid var(--modal-border, #e5e7eb);
+  border-radius: var(--modal-radius, 10px);
+  box-shadow: var(--modal-shadow, 0 8px 32px rgba(0, 0, 0, 0.18));
+  font-family: var(--modal-font, 'Inter', system-ui, sans-serif);
+  color: var(--modal-body-color, #1f2937);
+  overflow: hidden;
+  animation: bp-pop 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes bp-pop {
+  from { opacity: 0; transform: scale(0.97) translateY(6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ─── header ─── */
+.bp-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--modal-header-border, #e5e7eb);
+  background: var(--modal-header-bg, #fff);
+}
+.bp-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--modal-title-color, #111318);
+}
+.bp-subtitle {
+  margin: 3px 0 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--modal-subtitle-color, #6b7280);
+  overflow-wrap: anywhere;
+}
+.bp-close {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--modal-input-border, #dfe3e8);
+  border-radius: 6px;
+  background: var(--modal-bg, #fff);
+  color: var(--modal-hint-color, #9ca3af);
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.bp-close:hover {
+  color: var(--modal-error-color, #dc2626);
+  border-color: var(--modal-error-border, #dc2626);
+  background: var(--modal-error-bg, #fef2f2);
+}
+
+/* ─── toolbar ─── */
+.bp-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--modal-divider, #e5e7eb);
+}
+.bp-search {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 7px 10px;
+  border: 1px solid var(--modal-input-border, #dfe3e8);
+  border-radius: 6px;
+  background: var(--modal-input-bg, #fff);
+  color: var(--modal-input-color, #111318);
+  font-size: 12.5px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+.bp-search:focus {
+  border-color: var(--modal-input-focus, #2563eb);
+  box-shadow: var(--modal-input-focus-shadow, 0 0 0 3px rgba(37, 99, 235, 0.12));
+}
+
+/* ─── list ─── */
+.bp-body {
+  flex: 1;
+  overflow: auto;
+  padding: 4px 16px 12px;
+  background: var(--modal-body-bg, #fff);
+}
+.bp-msg {
+  margin: 16px 0;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--modal-hint-color, #9ca3af);
+}
+
+.bp-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.bp-tbl thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--modal-body-bg, #fff);
+  color: var(--modal-label-color, #6b7280);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--modal-border, #e5e7eb);
+  white-space: nowrap;
+}
+.bp-tbl tbody td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--modal-divider, #e5e7eb);
+  vertical-align: middle;
+}
+.bp-tbl tbody tr:last-child td { border-bottom: none; }
+.bp-tbl .bp-tbl-empty { text-align: center; color: var(--modal-hint-color, #9ca3af); padding: 16px; }
+
+.bp-row--picked td { background: var(--modal-badge-new-bg, #eff6ff); }
+.bp-row--over td { background: var(--modal-error-bg, #fef2f2); }
+
+.bp-batchnum { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
+.bp-num { text-align: right; font-variant-numeric: tabular-nums; color: var(--modal-subtitle-color, #6b7280); }
+.bp-check { width: 15px; height: 15px; accent-color: var(--modal-input-focus, #2563eb); cursor: pointer; }
+
+.bp-flag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--modal-error-bg, #fef2f2);
+  border: 1px solid var(--modal-error-border, #dc2626);
+  color: var(--modal-error-color, #dc2626);
+  font-family: var(--modal-font, sans-serif);
+  font-size: 9.5px;
+  letter-spacing: 0.2px;
+  vertical-align: middle;
+}
+
+.bp-qty {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border: 1px solid var(--modal-input-border, #dfe3e8);
+  border-radius: 6px;
+  background: var(--modal-input-bg, #fff);
+  color: var(--modal-input-color, #111318);
+  font-size: 12.5px;
+  font-family: inherit;
+  text-align: right;
+  outline: none;
+}
+.bp-qty:focus {
+  border-color: var(--modal-input-focus, #2563eb);
+  box-shadow: var(--modal-input-focus-shadow, 0 0 0 3px rgba(37, 99, 235, 0.12));
+}
+.bp-qty:disabled { background: var(--modal-input-disabled, #f7f8fa); color: var(--modal-hint-color, #9ca3af); }
+
+/* ─── footer ─── */
+.bp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--modal-footer-border, #e5e7eb);
+  background: var(--modal-footer-bg, #fff);
+}
+.bp-totals {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--modal-subtitle-color, #6b7280);
+}
+.bp-totals strong { color: var(--modal-body-color, #1f2937); }
+.bp-warn { color: var(--modal-error-color, #dc2626); font-size: 11.5px; }
+.bp-note { color: var(--modal-badge-edit-color, #c2410c); font-size: 11.5px; }
+
+.bp-footer-actions { display: flex; gap: 8px; flex: none; }
+
+.bp-btn {
+  padding: 7px 14px;
+  border-radius: var(--modal-btn-radius, 8px);
+  border: 1px solid transparent;
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.12s;
+  white-space: nowrap;
+}
+.bp-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.bp-btn--primary {
+  background: var(--modal-btn-primary-bg, #2563eb);
+  border-color: var(--modal-btn-primary-bg, #2563eb);
+  color: var(--modal-btn-primary-color, #fff);
+}
+.bp-btn--primary:hover:not(:disabled) { background: var(--modal-btn-primary-hover, #1d4ed8); }
+.bp-btn--secondary,
+.bp-btn--ghost {
+  background: var(--modal-btn-secondary-bg, #fff);
+  border-color: var(--modal-btn-secondary-border, #d7dbe2);
+  color: var(--modal-btn-secondary-color, #374151);
+}
+.bp-btn--secondary:hover:not(:disabled),
+.bp-btn--ghost:hover:not(:disabled) { background: var(--modal-btn-secondary-hover, #f6f7f9); }
+.bp-btn--ghost { font-weight: 500; }
+
+/* ─── the trigger that lives in a line-item row ─── */
+.bp-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 8px;
+  background: var(--modal-bg, #fff);
+  border: 1px solid var(--modal-input-border, #dfe3e8);
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--modal-btn-secondary-color, #374151);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.bp-trigger:hover:not(:disabled) {
+  border-color: var(--modal-input-focus, #2563eb);
+  background: var(--modal-badge-new-bg, #eff6ff);
+}
+.bp-trigger:disabled { opacity: 0.5; cursor: not-allowed; }
+/* Allocated — the line already carries its batches. */
+.bp-trigger--set {
+  border-color: var(--modal-badge-view-border, #bbf7d0);
+  background: var(--modal-badge-view-bg, #f0fdf4);
+  color: var(--modal-badge-view-color, #15803d);
+}
+.bp-trigger-count {
+  font-size: 10px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── loading cues on the page that owns the lines ───
+   Reading batch stock is what Available and the allocation both wait on, so the
+   wait is shown where the numbers will land, not behind a blocking overlay. */
+.bp-loading {
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  color: var(--modal-hint-color, #9ca3af);
+  animation: bp-pulse 1.1s ease-in-out infinite;
+}
+
+/* Sits in the Available cell — a bar the width of the number it replaces, so
+   the row does not jump when the figure arrives. */
+.bp-skeleton {
+  display: inline-block;
+  width: 46px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--modal-input-disabled, #f7f8fa);
+  border: 1px solid var(--modal-divider, #e5e7eb);
+  vertical-align: middle;
+  animation: bp-pulse 1.1s ease-in-out infinite;
+}
+
+@keyframes bp-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bp-loading,
+  .bp-skeleton { animation: none; }
+}
+
+/* ─── responsive — picking batches is a counting task done standing up ─── */
+@media (max-width: 640px) {
+  .bp-overlay { padding: 0; align-items: stretch; }
+  .bp-panel {
+    width: 100%;
+    max-height: 100%;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+  }
+  .bp-search,
+  .bp-qty { font-size: 16px; }
+  .bp-tbl tbody td { padding: 9px 8px; }
+  .bp-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .bp-footer-actions .bp-btn { flex: 1; min-height: 44px; }
+}

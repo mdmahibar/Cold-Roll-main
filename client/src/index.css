@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Layout */
+  .card {
+    @apply bg-white border border-gray-200 rounded-md shadow-sm overflow-hidden flex flex-col;
+  }
+  
+  .card-header-banner {
+    @apply bg-sap-primary text-white font-semibold flex items-center justify-between px-4 py-3 text-sm;
+  }
+
+  .sidebar {
+    @apply w-64 bg-white border-r border-gray-200 flex flex-col min-h-screen shadow-sm z-10;
+  }
+
+  .navbar {
+    @apply h-14 bg-sap-dark text-white flex items-center justify-between px-4 sticky top-0 z-20 shadow-sm;
+  }
+
+  /* Form Elements */
+  .form-input {
+    @apply w-full rounded-sm border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-800 outline-none transition-colors focus:border-sap-primary focus:ring-1 focus:ring-sap-primary;
+  }
+
+  .form-select {
+    @apply w-full rounded-sm border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-800 outline-none transition-colors focus:border-sap-primary focus:ring-1 focus:ring-sap-primary appearance-none cursor-pointer;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply bg-sap-primary hover:bg-blue-700 text-white font-semibold py-1.5 px-4 rounded shadow-sm transition-colors text-sm;
+  }
+
+  .btn-outline {
+    @apply bg-white hover:bg-gray-50 text-gray-700 font-semibold py-1.5 px-4 border border-gray-300 rounded shadow-sm transition-colors text-sm;
+  }
+
+  /* Tables */
+  .data-table {
+    @apply w-full text-left border-collapse text-sm whitespace-nowrap;
+  }
+  
+  .data-table th {
+    @apply p-3 font-semibold text-gray-600 bg-gray-100 border-b border-gray-200 uppercase tracking-wider text-xs sticky top-0 z-10;
+  }
+
+  .data-table td {
+    @apply p-3 text-gray-800 border-b border-gray-100;
+  }
+
+  .data-table tr:hover td {
+    @apply bg-blue-50/40;
+  }
+
+  /* Badges */
+  .badge-posted {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-green-100 text-green-800 border border-green-200;
+  }
+
+  .badge-pending {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-200;
+  }
+
+  .badge-active {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-sap-primary border border-blue-200;
+  }
+
+  /* ── KPI Summary Cards (Collect Milk style, modelled on ROSE SalesOrder) ── */
+  .cm-kpi-card {
+    @apply rounded-xl border border-gray-200 px-5 py-4 flex items-center gap-4 shadow-sm;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .cm-kpi-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+    transform: translateY(-2px);
+  }
+
+  .cm-kpi-card--navy {
+    background: #edf4fc;
+  }
+  .cm-kpi-card--navy .cm-kpi-icon {
+    color: #1e3a8a;
+  }
+
+  .cm-kpi-card--green {
+    background: #e6f4ea;
+  }
+  .cm-kpi-card--green .cm-kpi-icon {
+    color: #15803d;
+  }
+
+  .cm-kpi-card--amber {
+    background: #fef7e0;
+  }
+  .cm-kpi-card--amber .cm-kpi-icon {
+    color: #b45309;
+  }
+
+  .cm-kpi-icon-wrap {
+    @apply flex-shrink-0 w-12 h-12 rounded-xl bg-white flex items-center justify-center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  }
+  .cm-kpi-icon {
+    @apply w-6 h-6;
+  }
+
+  .cm-kpi-label {
+    @apply text-[13px] font-medium text-gray-500 mb-1;
+  }
+  .cm-kpi-value {
+    @apply text-[26px] font-bold text-gray-900 leading-none tracking-tight;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Custom Scrollbar for global table/container structures */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
